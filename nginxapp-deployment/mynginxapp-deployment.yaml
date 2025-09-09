@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mynginxapp
+  name: mynginxapp
+  namespace: nginx-ns
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mynginxapp
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: mynginxapp
+    spec:
+      containers:
+      - image: katkarvishalen99/nginxapp-jenkins
+        imagePullPolicy: Always
+        name: nginxapp-jenkins
